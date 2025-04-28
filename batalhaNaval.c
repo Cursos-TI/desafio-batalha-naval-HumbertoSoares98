@@ -1,40 +1,88 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
+#define LINHAS 10
+#define COLUNAS 10
+#define NAVIOS 3
 
-int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
+void imprimir_Letras(int letras[]){
+    printf("\nTABULEIRO BATALHA NAVAL\n");
 
-    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
-    // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
-    // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
-    // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
+    printf("  ");
+    for (int i = 0; i < 10; i++){
+        printf(" %2c", letras[i]);
+    }
+    printf("\n");
+}
 
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
+void imprimir_tabela(int tabela[LINHAS][COLUNAS]){
+    for (int i = 0; i < LINHAS; i++){
+        printf("%-3d", i + 0);
+        for (int j = 0; j < COLUNAS; j++){
+            printf("%2d ", tabela[i][j]);
+        }
+        printf("\n");
+    }
+}
 
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
-    
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
+void Habilidade_Cone(int tabela[LINHAS][COLUNAS], int linha_inicio, int coluna_inicio){
+    for(int i = 0; i < 3; i++){
+        for(int j = coluna_inicio - i; j <= coluna_inicio + i; j++){
+            if(linha_inicio + i < LINHAS && j >= 0 < COLUNAS){
+                tabela[linha_inicio + i][j] = NAVIOS;
+            }
+        }
+    }
+}
 
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
+void Habilidade_Octaedro(int tabela[LINHAS][COLUNAS], int linha_centro, int coluna_centro){
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            if (abs(i) + abs(j) <= 1) { // Forma de losango
+                int linha = linha_centro + i;
+                int coluna = coluna_centro + j;
+                if (linha >= 0 && linha < LINHAS && coluna >= 0 && coluna < COLUNAS) {
+                    tabela[linha][coluna] = NAVIOS;
+                }
+            }
+        }
+    }
+}
+
+void Habilidade_Cruz(int matriz[LINHAS][COLUNAS], int linha_centro, int coluna_centro){
+    for (int i = -1; i <= 1; i++) {           
+        for (int j = -2; j <= 2; j++) {        
+            if ((i == 0) || (j == 0)) {        
+                int linha = linha_centro + i;
+                int coluna = coluna_centro + j;
+                if (linha >= 0 && linha < LINHAS && coluna >= 0 && coluna < COLUNAS) {
+                    matriz[linha][coluna] = NAVIOS;
+                }
+            }
+        }
+    }
+}
+int main(){
+    int tabela[LINHAS][COLUNAS];
+    int letras[10] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+
+    for (int i = 0; i < LINHAS; i++) {
+        for (int j = 0; j < COLUNAS; j++) {
+            tabela[i][j] = 0;
+        }
+    }
+
+    Habilidade_Cone(tabela, 0, 2);
+    imprimir_Letras(letras);
+    imprimir_tabela(tabela);
+
+    Habilidade_Octaedro(tabela, 3, 6);
+    imprimir_Letras(letras);
+    imprimir_tabela(tabela);
+
+    Habilidade_Cruz(tabela, 5, 3);
+    imprimir_Letras(letras);
+    imprimir_tabela(tabela);
 
     return 0;
 }
