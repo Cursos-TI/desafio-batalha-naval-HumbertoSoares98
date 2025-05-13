@@ -50,7 +50,7 @@ void Habilidade_Octaedro(int tabela[LINHAS][COLUNAS], int linha_centro, int colu
 }
 
 void Habilidade_Cruz(int matriz[LINHAS][COLUNAS], int linha_centro, int coluna_centro){
-    for (int i = -1; i <= 1; i++) {           
+    for (int i = -2; i <= 2; i++) {           
         for (int j = -2; j <= 2; j++) {        
             if ((i == 0) || (j == 0)) {        
                 int linha = linha_centro + i;
@@ -73,14 +73,8 @@ int main(){
     }
 
     Habilidade_Cone(tabela, 0, 2);
-    imprimir_Letras(letras);
-    imprimir_tabela(tabela);
-
     Habilidade_Octaedro(tabela, 3, 6);
-    imprimir_Letras(letras);
-    imprimir_tabela(tabela);
-
-    Habilidade_Cruz(tabela, 5, 3);
+    Habilidade_Cruz(tabela, 6, 3);
     imprimir_Letras(letras);
     imprimir_tabela(tabela);
 
